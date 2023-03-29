@@ -138,8 +138,8 @@ class RmaAddSale(models.TransientModel):
             "uom_id": uom_id or product.uom_id.id,
             "operation_id": operation.id,
             "product_qty": quantity,
-            "delivery_address_id": self.sale_id.partner_id.id,
-            "invoice_address_id": self.sale_id.partner_id.id,
+            "delivery_address_id": self.sale_id.partner_shipping_id.id,
+            "invoice_address_id": self.sale_id.partner_invoice_id.id,
             "price_unit": line.product_id == product
             and line.currency_id._convert(
                 line.price_unit,
