@@ -4,8 +4,8 @@
 from odoo import api, models
 
 
-class RmaLineMakeSaleOrder(models.TransientModel):
-    _inherit = "rma.order.line.make.sale.order"
+class RmaMakeSaleOrder(models.TransientModel):
+    _inherit = "rma.make.sale.order"
 
     @api.model
     def _prepare_sale_order(self, line):
