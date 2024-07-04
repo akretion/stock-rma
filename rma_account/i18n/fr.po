@@ -393,6 +393,7 @@ msgstr "Opération RMA"
 #: model:ir.model.fields,field_description:rma_account.field_rma_add_account_move__rma_id
 msgid "RMA Order"
 msgstr "Commande RMA"
+
 #. module: rma_account
 #. odoo-python
 #: code:addons/rma_account/models/rma_order_line.py:0
