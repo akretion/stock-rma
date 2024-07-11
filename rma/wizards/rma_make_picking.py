@@ -148,6 +148,10 @@ class RmaMakePicking(models.TransientModel):
         return procurement_data
 
     @api.model
+    def _get_product(self, item):
+        return item.line_id.product_id
+
+    @api.model
     def _create_procurement(self, item, picking_type):
         errors = []
         group = self.find_procurement_group(item)
@@ -159,7 +163,7 @@ class RmaMakePicking(models.TransientModel):
         else:
             qty = item.qty_to_deliver
         values = self._get_procurement_data(item, group, qty, picking_type)
-        product = item.line_id.product_id
+        product = self._get_product(item)
         if float_compare(qty, 0, product.uom_id.rounding) != 1:
             raise ValidationError(
                 _(
@@ -172,16 +176,15 @@ class RmaMakePicking(models.TransientModel):
         procurements = []
         try:
             procurement = group.Procurement(
-                item.line_id.product_id,
+                product,
                 qty,
-                item.line_id.product_id.product_tmpl_id.uom_id,
+                product.product_tmpl_id.uom_id,
                 values.get("location_id"),
                 values.get("origin"),
                 values.get("origin"),
                 self.env.company,
                 values,
             )
-
             procurements.append(procurement)
             # Trigger a route check with a mutable in the context that can be
             # cleared after the first rule selection
@@ -222,7 +225,7 @@ class RmaMakePicking(models.TransientModel):
             action = self.item_ids.line_id.action_view_in_shipments()
         # Force the reservation of the RMA specific lot for incoming shipments.
         # FIXME: still needs fixing, not reserving appropriate serials.
-        for move in pickings.move_ids.filtered(
+        for move in pickings.move_lines.filtered(
             lambda x: x.state not in ("draft", "cancel", "done", "waiting")
             and x.rma_line_id
             and x.product_id.tracking in ("lot", "serial")

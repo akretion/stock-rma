@@ -5,7 +5,7 @@
         <field name="model">product.category</field>
         <field name="inherit_id" ref="stock.product_category_form_view_inherit" />
         <field name="arch" type="xml">
-                <group name="logistics" position="after">
+                <xpath expr="//group[@name='first']" position="inside">
                     <group name="rma">
                         <field
                         name="rma_approval_policy"
@@ -22,7 +22,7 @@
                         domain="[('type','=','supplier')]"
                     />
                     </group>
-                </group>
+                </xpath>
         </field>
     </record>
 

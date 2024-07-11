@@ -20,8 +20,8 @@ class StockMove(models.Model):
                     vals["rma_line_id"] = group.rma_line_id.id
         return super().create(vals_list)
 
-    def _action_assign(self, force_qty=False):
-        res = super()._action_assign(force_qty=force_qty)
+    def _action_assign(self):
+        res = super()._action_assign()
         for move in self:
             if move.rma_line_id:
                 move.partner_id = move.rma_line_id.partner_id.id or False
@@ -43,8 +43,8 @@ class StockMove(models.Model):
         else:
             return self.location_dest_id.usage
 
-    def _should_bypass_reservation(self, forced_location=False):
-        res = super()._should_bypass_reservation(forced_location=forced_location)
+    def _should_bypass_reservation(self):
+        res = super()._should_bypass_reservation()
         if self.env.context.get("force_no_bypass_reservation"):
             return False
         return res

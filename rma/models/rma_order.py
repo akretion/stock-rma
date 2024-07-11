@@ -132,12 +132,12 @@ class RmaOrder(models.Model):
         default=lambda self: self.env.uid,
     )
     in_route_id = fields.Many2one(
-        "stock.route",
+        "stock.location.route",
         string="Inbound Route",
         domain=[("rma_selectable", "=", True)],
     )
     out_route_id = fields.Many2one(
-        "stock.route",
+        "stock.location.route",
         string="Outbound Route",
         domain=[("rma_selectable", "=", True)],
     )

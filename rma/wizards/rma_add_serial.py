@@ -20,7 +20,7 @@ class RmaAddSerialWiz(models.TransientModel):
         comodel_name="res.partner",
     )
     lot_ids = fields.Many2many(
-        comodel_name="stock.lot",
+        comodel_name="stock.production.lot",
         string="Lots/Serials selected",
     )
 
@@ -78,7 +78,7 @@ class RmaAddSerialWiz(models.TransientModel):
                 raise ValidationError(_("Please define an operation first"))
 
         if not operation.in_route_id or not operation.out_route_id:
-            route = self.env["stock.route"].search(
+            route = self.env["stock.location.route"].search(
                 [("rma_selectable", "=", True)], limit=1
             )
             if not route:
