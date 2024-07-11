@@ -103,7 +103,7 @@ class RmaMakeSupplierRma(models.TransientModel):
         else:
             operation = self._get_default_operation()
         if not operation.in_route_id or not operation.out_route_id:
-            route = self.env["stock.route"].search(
+            route = self.env["stock.location.route"].search(
                 [("rma_selectable", "=", True)], limit=1
             )
             if not route:

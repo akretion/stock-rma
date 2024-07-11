@@ -59,7 +59,7 @@ class RmaRefund(models.TransientModel):
         items = []
         if active_model == "rma.order":
             rma = rma_obj.browse(active_ids)
-            lines = rma.rma_line_ids
+            lines = rma.rma_line_ids.filtered(lambda x: x.qty_to_refund > 0)
         else:
             lines = rma_line_obj.browse(active_ids)
         if len(lines.mapped("partner_id")) > 1:
@@ -105,16 +105,9 @@ class RmaRefund(models.TransientModel):
             return new_refund
 
     def invoice_refund(self):
-        rma_line_obj = self.env["rma.order.line"]
-        rma_obj = self.env["rma.order"]
-        active_ids = self.env.context.get("active_ids") or []
-        active_model = self.env.context.get("active_model")
-        if active_model == "rma.order":
-            rma = rma_obj.browse(active_ids)
-            lines = rma.rma_line_ids
-        else:
-            lines = rma_line_obj.browse(active_ids)
+        lines = self.item_ids.line_id
         for line in lines:
+
             if line.state != "approved":
                 raise ValidationError(_("RMA %s is not approved") % line.name)
         new_invoice = self.compute_refund()
@@ -190,12 +183,13 @@ class RmaRefund(models.TransientModel):
             "ref": ref,
             "move_type": "in_refund" if rma_line.type == "supplier" else "out_refund",
             "journal_id": journal.id,
-            "fiscal_position_id": rma_line.partner_id.property_account_position_id.id,
             "state": "draft",
             "currency_id": self._get_refund_currency(rma_line).id,
             "date": wizard.date,
             "invoice_date": wizard.date_invoice,
             "partner_id": rma_line.invoice_address_id.id or rma_line.partner_id.id,
+            "partner_shipping_id": rma_line.delivery_address_id.id
+            or rma_line.partner_id.id,
             "invoice_line_ids": [
                 (0, None, self.prepare_refund_line(item)) for item in self.item_ids
             ],

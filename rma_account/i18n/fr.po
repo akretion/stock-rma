@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-05 13:27+0000\n"
-"PO-Revision-Date: 2024-07-05 13:27+0000\n"
+"POT-Creation-Date: 2024-09-16 14:25+0000\n"
+"PO-Revision-Date: 2024-09-16 14:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -113,8 +113,8 @@ msgstr "Confirmer"
 
 #. module: rma_account
 #: model:ir.actions.act_window,name:rma_account.action_rma_refund
-#: model_terms:ir.ui.view,arch_db:rma_account.view_rma_button_refund_form
-#: model_terms:ir.ui.view,arch_db:rma_account.view_rma_line_button_refund_form
+#: model_terms:ir.ui.view,arch_db:rma_account.view_rma_form
+#: model_terms:ir.ui.view,arch_db:rma_account.view_rma_line_form
 #: model_terms:ir.ui.view,arch_db:rma_account.view_rma_refund
 msgid "Create Refund"
 msgstr "Créer un remboursement"
@@ -177,21 +177,26 @@ msgstr ""
 
 #. module: rma_account
 #: model:ir.model.fields,help:rma_account.field_rma_operation__refund_free_of_charge
-msgid "In case of automated refund you should mark this option as long "
-"automated refunds mean to compensate Stock Interim accounts only without "
-"hitting Accounts receivable"
-msgstr "En cas de remboursement automatique, vous devez cocher cette option car "
-"les remboursements automatisés longs visent à compenser uniquement les "
-"comptes Stock Provisoire sans affecter les comptes clients"
+msgid ""
+"In case of automated refund you should mark this option as long "
+"automatedrefunds mean to compensate Stock Interim accounts only without "
+"hittingAccounts receivable"
+msgstr ""
+"En cas de remboursement automatique, vous devez cocher cette option car les "
+"remboursements automatisés longs visent à compenser uniquement les comptes "
+"Stock Provisoire sans affecter les comptes clients"
 
 #. module: rma_account
 #: model:ir.model.fields,help:rma_account.field_rma_operation__automated_refund
-msgid "In the scenario where a company uses anglo-saxon accounting, if you receive "
+msgid ""
+"In the scenario where a company uses anglo-saxon accounting, if you receive "
 "products from a customer and don't expect to refund the customer but send a "
 "replacement unit, mark this flag to be accounting consistent"
-msgstr "Dans le cas où une entreprise utilise la comptabilité anglo-saxonne, si vous "
-"recevez des produits d'un client et que vous n'espérez pas rembourser le client "
-"mais envoyer une unité de remplacement, cochez cette option pour être comptablement cohérent"
+msgstr ""
+"Dans le cas où une entreprise utilise la comptabilité anglo-saxonne, si vous"
+" recevez des produits d'un client et que vous n'espérez pas rembourser le "
+"client mais envoyer une unité de remplacement, cochez cette option pour être"
+" comptablement cohérent"
 
 #. module: rma_account
 #: model:ir.model.fields,field_description:rma_account.field_rma_refund_item__invoice_address_id
@@ -270,12 +275,19 @@ msgstr "Non requis"
 #: code:addons/rma_account/wizards/rma_refund.py:0
 #, python-format
 msgid "Only RMAs from the same partner can be processed at the same time."
-msgstr "Seuls les RMA du même partenaire peuvent être traités en même temps."
+msgstr "Seuls les RMA provenant du même partenaire peuvent être traités en même temps."
 
 #. module: rma_account
 #: model_terms:ir.ui.view,arch_db:rma_account.view_rma_form
 #: model_terms:ir.ui.view,arch_db:rma_account.view_rma_line_form
 msgid "Origin Inv"
+msgstr "Facture Source"
+
+#. module: rma_account
+#. odoo-python
+#: code:addons/rma_account/models/rma_order.py:0
+#, python-format
+msgid "Originating Invoice"
 msgstr "Facture Source"
 
 #. module: rma_account
@@ -299,7 +311,7 @@ msgstr "Adresse de facturation du partenaire"
 #: code:addons/rma_account/wizards/rma_add_account_move.py:0
 #, python-format
 msgid "Please define a warehouse with a default rma location"
-msgstr "Veuillez définir un entrepôt avec un emplacement RMA par défaut"
+msgstr "Veuillez définir un entrepôt avec un emplacement rma par défaut"
 
 #. module: rma_account
 #. odoo-python
@@ -315,7 +327,7 @@ msgstr "Veuillez d'abord définir une opération"
 #: code:addons/rma_account/wizards/rma_add_account_move.py:0
 #, python-format
 msgid "Please define an rma route"
-msgstr "Veuillez définir une route RMA"
+msgstr "Veuillez définir une route rma"
 
 #. module: rma_account
 #: model:ir.model,name:rma_account.model_procurement_group
@@ -399,7 +411,7 @@ msgstr "Commande RMA"
 #: code:addons/rma_account/models/rma_order_line.py:0
 #, python-format
 msgid "RMA customer and originating invoice line customer doesn't match."
-msgstr "Le client RMA et le client de la ligne de facture d'origine ne correspondent pas."
+msgstr "Le client RMA et le client sur la ligne de facture source ne correspondent pas."
 
 #. module: rma_account
 #: model:ir.model.fields,field_description:rma_account.field_account_move_line__rma_line_id
@@ -523,7 +535,7 @@ msgstr "L'adresse de facturation doit être la même pour toutes les lignes."
 #: code:addons/rma_account/models/rma_order_line.py:0
 #, python-format
 msgid "There's an rma for the invoice line %(arg1)s and invoice %(arg2)s"
-msgstr "Il existe un RMA pour la ligne de facture %(arg1)s et la facture %(arg2)s"
+msgstr "Il existe un rma pour la ligne de facture %(arg1)s et la facture %(arg2)s"
 
 #. module: rma_account
 #: model:ir.model.fields,help:rma_account.field_account_move_line__rma_line_ids

@@ -313,7 +313,7 @@ class RmaOrderLine(models.Model):
     )
     product_tracking = fields.Selection(related="product_id.tracking")
     lot_id = fields.Many2one(
-        comodel_name="stock.lot",
+        comodel_name="stock.production.lot",
         string="Lot/Serial Number",
         readonly=True,
         states={"draft": [("readonly", False)]},
@@ -405,7 +405,7 @@ class RmaOrderLine(models.Model):
         ondelete="cascade",
     )
     in_route_id = fields.Many2one(
-        "stock.route",
+        "stock.location.route",
         string="Inbound Route",
         required=True,
         domain=[("rma_selectable", "=", True)],
@@ -416,7 +416,7 @@ class RmaOrderLine(models.Model):
         states={"draft": [("readonly", False)]},
     )
     out_route_id = fields.Many2one(
-        "stock.route",
+        "stock.location.route",
         string="Outbound Route",
         required=True,
         domain=[("rma_selectable", "=", True)],
@@ -552,7 +552,7 @@ class RmaOrderLine(models.Model):
                 raise ValidationError(_("Please define an operation first."))
 
         if not operation.in_route_id or not operation.out_route_id:
-            route = self.env["stock.route"].search(
+            route = self.env["stock.location.route"].search(
                 [("rma_selectable", "=", True)], limit=1
             )
             if not route:
