@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="rma_responsible_view_search" model="ir.ui.view">
+        <field name="name">rma.responsible.search</field>
+        <field name="model">rma.responsible</field>
+        <field name="arch" type="xml">
+            <search string="RMA responsibles">
+                <field name="name" />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active','=',False)]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="view_rma_responsible_form" model="ir.ui.view">
+        <field name="name">rma.responsible.form</field>
+        <field name="model">rma.responsible</field>
+        <field name="arch" type="xml">
+            <form string="RMA responsible">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="cause_ids" widget="many2many_tags" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_rma_responsible_tree" model="ir.ui.view">
+        <field name="name">rma.responsible.tree</field>
+        <field name="model">rma.responsible</field>
+        <field eval="6" name="priority" />
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name" />
+                <field name="cause_ids" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_rma_responsible" model="ir.actions.act_window">
+        <field name="name">RMA responsibles</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">rma.responsible</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a new RMA responsible
+            </p><p>
+            Manage RMA responsibles to better classify them for tracking and analysis purposes.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="rma_configuration_rma_responsible_menu"
+        name="RMA responsibles"
+        sequence="20"
+        parent="rma.menu_rma_config"
+        action="action_rma_responsible"
+    />
+</odoo>

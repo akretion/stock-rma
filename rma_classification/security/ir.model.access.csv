@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rma_responsible_manager,access.rma.responsible,model_rma_responsible,rma.group_rma_manager,1,1,1,1
+access_rma_responsible_customer_user,access.rma.responsible,model_rma_responsible,rma.group_rma_customer_user,1,0,0,0
+access_rma_responsible_supplier_user,access.rma.responsible,model_rma_responsible,rma.group_rma_supplier_user,1,0,0,0
+access_rma_cause_manager,access.rma.cause,model_rma_cause,rma.group_rma_manager,1,1,1,1
+access_rma_cause_customer_user,access.rma.cause,model_rma_cause,rma.group_rma_customer_user,1,0,0,0
+access_rma_cause_supplier_user,access.rma.cause,model_rma_cause,rma.group_rma_supplier_user,1,0,0,0

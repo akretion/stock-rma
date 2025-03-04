@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="rma_cause_view_search" model="ir.ui.view">
+        <field name="name">rma.cause.search</field>
+        <field name="model">rma.cause</field>
+        <field name="arch" type="xml">
+            <search string="Problems">
+                <field name="name" />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active','=',False)]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="view_rma_cause_form" model="ir.ui.view">
+        <field name="name">rma.cause.form</field>
+        <field name="model">rma.cause</field>
+        <field name="arch" type="xml">
+            <form string="RMA Cause">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="responsible_ids" widget="many2many_tags" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_rma_cause_tree" model="ir.ui.view">
+        <field name="name">rma.cause.tree</field>
+        <field name="model">rma.cause</field>
+        <field eval="6" name="priority" />
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name" />
+                <field name="responsible_ids" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_rma_cause" model="ir.actions.act_window">
+        <field name="name">RMA causes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">rma.cause</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a new RMA cause
+            </p><p>
+            Manage RMA causes to better classify them for tracking and analysis purposes.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="rma_configuration_rma_cause_menu"
+        name="RMA causes"
+        sequence="21"
+        parent="rma.menu_rma_config"
+        action="action_rma_cause"
+    />
+</odoo>
