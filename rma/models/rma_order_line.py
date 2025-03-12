@@ -96,9 +96,16 @@ class RmaOrderLine(models.Model):
             pickings = line._get_out_pickings()
             line.out_shipment_count = len(pickings)
 
+    def _get_rma_quantity_from_moves(self, moves):
+        self.ensure_one()
+        uom_obj = self.env["uom.uom"]
+        qty = 0.0
+        for move in moves:
+            qty += uom_obj._compute_quantity(move.product_uom_qty, self.uom_id)
+        return qty
+
     def _get_rma_move_qty(self, states, direction="in"):
         for rec in self:
-            product_obj = self.env["uom.uom"]
             qty = 0.0
             if direction == "in":
                 moves = rec.move_ids.filtered(
@@ -124,8 +131,7 @@ class RmaOrderLine(models.Model):
                         or m.location_id.usage == "supplier"
                     )
                 )
-            for move in moves:
-                qty += product_obj._compute_quantity(move.product_uom_qty, rec.uom_id)
+            qty = self._get_rma_quantity_from_moves(moves)
             return qty
 
     @api.depends(
