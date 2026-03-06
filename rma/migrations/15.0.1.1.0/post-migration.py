@@ -120,7 +120,44 @@ def set_rma_supplier_operation_category_property(cr):
 def migrate(cr, version=None):
     if not version:
         return
-    set_rma_customer_operation_property(cr)
-    set_rma_supplier_operation_property(cr)
-    set_rma_customer_operation_category_property(cr)
-    set_rma_supplier_operation_category_property(cr)
+
+    cr.execute(
+        """
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_name = 'product_template'
+          AND column_name = 'rma_customer_operation_id'
+    """
+    )
+    if cr.fetchone():
+        set_rma_customer_operation_property(cr)
+    cr.execute(
+        """
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_name = 'product_template'
+          AND column_name = 'rma_supplier_operation_id'
+    """
+    )
+    if cr.fetchone():
+        set_rma_supplier_operation_property(cr)
+    cr.execute(
+        """
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_name = 'product_category'
+          AND column_name = 'rma_customer_operation_id'
+    """
+    )
+    if cr.fetchone():
+        set_rma_customer_operation_category_property(cr)
+    cr.execute(
+        """
+        SELECT column_name
+        FROM information_schema.columns
+        WHERE table_name = 'product_category'
+          AND column_name = 'rma_supplier_operation_id'
+    """
+    )
+    if cr.fetchone():
+        set_rma_supplier_operation_category_property(cr)
