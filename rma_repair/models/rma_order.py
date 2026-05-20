@@ -1,7 +1,7 @@
 # Copyright 2020 ForgeFlow S.L.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class RmaOrder(models.Model):
@@ -21,12 +21,21 @@ class RmaOrder(models.Model):
             )
             order.repair_transfer_count = len(pickings)
 
+    @api.depends("rma_line_ids", "rma_line_ids.qty_to_repair")
+    def _compute_qty_to_repair(self):
+        for rec in self:
+            rec.qty_to_repair = sum(rec.rma_line_ids.mapped("qty_to_repair"))
+
     repair_count = fields.Integer(
         compute="_compute_repair_count", string="# of Repairs"
     )
 
     repair_transfer_count = fields.Integer(
         compute="_compute_repair_transfer_count", string="# Repair Transfers"
+    )
+    qty_to_repair = fields.Float(
+        digits="Product Unit of Measure",
+        compute="_compute_qty_to_repair",
     )
 
     def action_view_repair_order(self):

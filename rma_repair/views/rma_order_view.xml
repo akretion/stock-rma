@@ -35,8 +35,27 @@
                     />
                 </button>
             </div>
+            <xpath
+                expr="//header/button[@name='%(rma.action_make_supplier_rma)d']"
+                position="after"
+            >
+                <button
+                    name="%(rma_repair.action_rma_order_line_make_repair)d"
+                    string="Create Repair Order"
+                    class="oe_highlight"
+                    invisible="qty_to_repair == 0 or qty_to_repair &lt; 0 or state != 'approved'"
+                    type="action"
+                />
+            </xpath>
+
             <xpath expr="//field[@name='rma_line_ids']/list" position="inside">
                 <field name="repair_type" column_invisible="True" />
+            </xpath>
+            <xpath
+                expr="//field[@name='rma_line_ids']/list/field[@name='product_qty']"
+                position="after"
+            >
+                <field name="under_warranty" optional="hide" />
             </xpath>
         </field>
     </record>

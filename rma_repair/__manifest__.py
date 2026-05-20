@@ -11,10 +11,10 @@
     "depends": ["rma_account", "repair"],
     "data": [
         "security/ir.model.access.csv",
+        "wizards/rma_order_line_make_repair_view.xml",
         "views/rma_order_view.xml",
         "views/rma_operation_view.xml",
         "views/repair_view.xml",
-        "wizards/rma_order_line_make_repair_view.xml",
         "views/rma_order_line_view.xml",
     ],
     "installable": True,
